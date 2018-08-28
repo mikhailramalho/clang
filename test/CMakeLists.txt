@@ -152,6 +152,15 @@ if (CLANG_ENABLE_STATIC_ANALYZER)
     set_target_properties(check-clang-analyzer-z3 PROPERTIES FOLDER "Clang tests")
   endif()
 
+  if (CLANG_ANALYZER_WITH_BOOLECTOR)
+    add_lit_testsuite(check-clang-analyzer-boolector "Running the Clang analyzer tests, using BOOLECTOR as a solver"
+            ${CMAKE_CURRENT_BINARY_DIR}/Analysis
+            PARAMS ${ANALYZER_TEST_PARAMS_BOOLECTOR}
+            DEPENDS ${CLANG_TEST_DEPS})
+    set_target_properties(check-clang-analyzer-boolector PROPERTIES FOLDER "Clang tests")
+  endif()
+
+
   set(EXCLUDE_FROM_ALL OFF)
 endif()
 

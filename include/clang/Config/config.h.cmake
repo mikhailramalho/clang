@@ -57,6 +57,9 @@
 /* Define if we have z3 and want to build it */
 #cmakedefine CLANG_ANALYZER_WITH_Z3 ${CLANG_ANALYZER_WITH_Z3}
 
+/* Define if we have boolector and want to build it */
+#cmakedefine CLANG_ANALYZER_WITH_BOOLECTOR ${CLANG_ANALYZER_WITH_BOOLECTOR}
+
 /* Define if we have sys/resource.h (rlimits) */
 #cmakedefine CLANG_HAVE_RLIMITS ${CLANG_HAVE_RLIMITS}
 

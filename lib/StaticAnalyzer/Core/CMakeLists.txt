@@ -7,6 +7,13 @@ else()
   set(Z3_LINK_FILES "")
 endif()
 
+# Link MATHSAT if the user wants to build it.
+if(CLANG_ANALYZER_WITH_MATHSAT)
+  set(MATHSAT_LINK_FILES ${MATHSAT_LIBRARIES} ${GMP_LIBRARIES})
+else()
+  set(MATHSAT_LINK_FILES "")
+endif()
+
 add_clang_library(clangStaticAnalyzerCore
   APSIntType.cpp
   AnalysisManager.cpp
@@ -54,6 +61,7 @@ add_clang_library(clangStaticAnalyzerCore
   SymbolManager.cpp
   WorkList.cpp
   Z3ConstraintManager.cpp
+  MathsatConstraintManager.cpp
 
   LINK_LIBS
   clangAST
@@ -64,11 +72,19 @@ add_clang_library(clangStaticAnalyzerCore
   clangLex
   clangRewrite
   ${Z3_LINK_FILES}
+  ${MATHSAT_LINK_FILES}
   )
 
 if(CLANG_ANALYZER_WITH_Z3)
   target_include_directories(clangStaticAnalyzerCore SYSTEM
     PRIVATE
     ${Z3_INCLUDE_DIR}
+    )
+endif()
+
+if(CLANG_ANALYZER_WITH_MATHSAT)
+  target_include_directories(clangStaticAnalyzerCore SYSTEM
+    PRIVATE
+    ${MATHSAT_INCLUDE_DIR}
     )
 endif()

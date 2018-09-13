@@ -152,6 +152,14 @@ if (CLANG_ENABLE_STATIC_ANALYZER)
     set_target_properties(check-clang-analyzer-z3 PROPERTIES FOLDER "Clang tests")
   endif()
 
+  if (CLANG_ANALYZER_WITH_MATHSAT)
+    add_lit_testsuite(check-clang-analyzer-mathsat "Running the Clang analyzer tests, using MathSAT as a solver"
+      ${CMAKE_CURRENT_BINARY_DIR}/Analysis
+      PARAMS ${ANALYZER_TEST_PARAMS_MATHSAT}
+      DEPENDS ${CLANG_TEST_DEPS})
+    set_target_properties(check-clang-analyzer-mathsat PROPERTIES FOLDER "Clang tests")
+  endif()
+
   set(EXCLUDE_FROM_ALL OFF)
 endif()
 

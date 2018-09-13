@@ -306,6 +306,9 @@ using SMTSolverRef = std::shared_ptr<SMTSolver>;
 /// Convenience method to create and Z3Solver object
 SMTSolverRef CreateZ3Solver();
 
+/// Convenience method to create and MathSAT Solver object
+SMTSolverRef CreateMathSATSolver();
+
 } // namespace ento
 } // namespace clang
 

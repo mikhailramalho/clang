@@ -7,6 +7,12 @@ else()
   set(Z3_LINK_FILES "")
 endif()
 
+if(CLANG_ANALYZER_WITH_YICES)
+  set(YICES_LINK_FILES ${YICES_LIBRARIES} ${GMP_LIBRARIES})
+else()
+  set(YICES_LINK_FILES "")
+endif()
+
 add_clang_library(clangStaticAnalyzerCore
   APSIntType.cpp
   AnalysisManager.cpp
@@ -54,6 +60,7 @@ add_clang_library(clangStaticAnalyzerCore
   SymbolManager.cpp
   WorkList.cpp
   Z3ConstraintManager.cpp
+  YicesConstraintManager.cpp
 
   LINK_LIBS
   clangAST
@@ -64,11 +71,19 @@ add_clang_library(clangStaticAnalyzerCore
   clangLex
   clangRewrite
   ${Z3_LINK_FILES}
+  ${YICES_LINK_FILES}
   )
 
 if(CLANG_ANALYZER_WITH_Z3)
   target_include_directories(clangStaticAnalyzerCore SYSTEM
     PRIVATE
     ${Z3_INCLUDE_DIR}
+    )
+endif()
+
+if(CLANG_ANALYZER_WITH_YICES)
+  target_include_directories(clangStaticAnalyzerCore SYSTEM
+    PRIVATE
+    ${YICES_INCLUDE_DIR}
     )
 endif()

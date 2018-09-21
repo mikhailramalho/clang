@@ -419,10 +419,35 @@ if (CLANG_ANALYZER_ENABLE_Z3_SOLVER)
   set(CLANG_ANALYZER_WITH_Z3 1)
 endif()
 
+set(CLANG_ANALYZER_CVC4_INSTALL_DIR "" CACHE STRING "Install directory of the CVC4 solver.")
+
+find_package(CVC4 1.6 EXACT)
+
+if (CLANG_ANALYZER_CVC4_INSTALL_DIR)
+  if (NOT CVC4_FOUND)
+    message(FATAL_ERROR "CVC4 1.6 has not been found in CLANG_ANALYZER_CVC4_INSTALL_DIR: ${CLANG_ANALYZER_CVC4_INSTALL_DIR}.")
+  endif()
+endif()
+
+set(CLANG_ANALYZER_ENABLE_CVC4_SOLVER_DEFAULT "${CVC4_FOUND}")
+
+option(CLANG_ANALYZER_ENABLE_CVC4_SOLVER
+        "Enable Support for the CVC4 constraint solver in the Clang Static Analyzer."
+        ${CLANG_ANALYZER_ENABLE_CVC4_SOLVER_DEFAULT}
+        )
+
+if (CLANG_ANALYZER_ENABLE_CVC4_SOLVER)
+  if (NOT CVC4_FOUND)
+    message(FATAL_ERROR "CLANG_ANALYZER_ENABLE_CVC4_SOLVER cannot be enabled when CVC4 is not available.")
+  endif()
+
+  set(CLANG_ANALYZER_WITH_CVC4 1)
+endif()
+
 option(CLANG_ENABLE_PROTO_FUZZER "Build Clang protobuf fuzzer." OFF)
 
-if(NOT CLANG_ENABLE_STATIC_ANALYZER AND (CLANG_ENABLE_ARCMT OR CLANG_ANALYZER_ENABLE_Z3_SOLVER))
-  message(FATAL_ERROR "Cannot disable static analyzer while enabling ARCMT or Z3")
+if(NOT CLANG_ENABLE_STATIC_ANALYZER AND (CLANG_ENABLE_ARCMT OR CLANG_ANALYZER_ENABLE_Z3_SOLVER OR CLANG_ANALYZER_ENABLE_CVC4_SOLVER))
+  message(FATAL_ERROR "Cannot disable static analyzer while enabling ARCMT, Z3 or CVC4")
 endif()
 
 if(CLANG_ENABLE_ARCMT)

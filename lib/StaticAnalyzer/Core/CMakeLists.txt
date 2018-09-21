@@ -7,6 +7,13 @@ else()
   set(Z3_LINK_FILES "")
 endif()
 
+# Link CVC4 if the user wants to build it.
+if(CLANG_ANALYZER_WITH_CVC4)
+  set(CVC4_LINK_FILES ${CVC4_LIBRARIES} ${GMP_LIBRARIES})
+else()
+  set(CVC4_LINK_FILES "")
+endif()
+
 add_clang_library(clangStaticAnalyzerCore
   APSIntType.cpp
   AnalysisManager.cpp
@@ -54,6 +61,7 @@ add_clang_library(clangStaticAnalyzerCore
   SymbolManager.cpp
   WorkList.cpp
   Z3ConstraintManager.cpp
+  Cvc4ConstraintManager.cpp
 
   LINK_LIBS
   clangAST
@@ -64,11 +72,22 @@ add_clang_library(clangStaticAnalyzerCore
   clangLex
   clangRewrite
   ${Z3_LINK_FILES}
+  ${CVC4_LINK_FILES}
   )
+
+# enabled exception handling only for the cvc4 backend source
+set_source_files_properties(Cvc4ConstraintManager.cpp PROPERTIES COMPILE_FLAGS -fexceptions)
 
 if(CLANG_ANALYZER_WITH_Z3)
   target_include_directories(clangStaticAnalyzerCore SYSTEM
     PRIVATE
     ${Z3_INCLUDE_DIR}
+    )
+endif()
+
+if(CLANG_ANALYZER_WITH_CVC4)
+  target_include_directories(clangStaticAnalyzerCore SYSTEM
+    PRIVATE
+    ${CVC4_INCLUDE_DIR}
     )
 endif()

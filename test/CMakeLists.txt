@@ -152,6 +152,14 @@ if (CLANG_ENABLE_STATIC_ANALYZER)
     set_target_properties(check-clang-analyzer-z3 PROPERTIES FOLDER "Clang tests")
   endif()
 
+  if (CLANG_ANALYZER_WITH_CVC4)
+    add_lit_testsuite(check-clang-analyzer-cvc4 "Running the Clang analyzer tests, using CVC4 as a solver"
+      ${CMAKE_CURRENT_BINARY_DIR}/Analysis
+      PARAMS ${ANALYZER_TEST_PARAMS_CVC4}
+      DEPENDS ${CLANG_TEST_DEPS})
+    set_target_properties(check-clang-analyzer-cvc4 PROPERTIES FOLDER "Clang tests")
+  endif()
+
   set(EXCLUDE_FROM_ALL OFF)
 endif()
 

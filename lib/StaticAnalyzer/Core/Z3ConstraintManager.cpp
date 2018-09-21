@@ -342,7 +342,7 @@ public:
       Z3_solver_dec_ref(Context.Context, Solver);
   }
 
-  void addConstraint(const SMTExprRef &Exp) const override {
+  void addConstraint(const SMTExprRef &Exp) override {
     Z3_solver_assert(Context.Context, Solver, toZ3Expr(*Exp).AST);
   }
 

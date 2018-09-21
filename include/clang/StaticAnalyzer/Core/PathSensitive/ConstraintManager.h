@@ -203,6 +203,8 @@ CreateRangeConstraintManager(ProgramStateManager &statemgr,
 std::unique_ptr<ConstraintManager>
 CreateZ3ConstraintManager(ProgramStateManager &statemgr, SubEngine *subengine);
 
+std::unique_ptr<ConstraintManager>
+CreateCvc4ConstraintManager(ProgramStateManager &statemgr, SubEngine *subengine);
 } // namespace ento
 } // namespace clang
 

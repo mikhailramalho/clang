@@ -75,7 +75,7 @@ public:
   virtual SMTExprRef newExprRef(const SMTExpr &E) const = 0;
 
   /// Given a constraint, adds it to the solver
-  virtual void addConstraint(const SMTExprRef &Exp) const = 0;
+  virtual void addConstraint(const SMTExprRef &Exp) = 0;
 
   /// Creates a bitvector addition operation
   virtual SMTExprRef mkBVAdd(const SMTExprRef &LHS, const SMTExprRef &RHS) = 0;
@@ -305,6 +305,9 @@ using SMTSolverRef = std::shared_ptr<SMTSolver>;
 
 /// Convenience method to create and Z3Solver object
 SMTSolverRef CreateZ3Solver();
+
+/// Convenience method to create and CVC4 Solver object
+SMTSolverRef CreateCvc4Solver();
 
 } // namespace ento
 } // namespace clang

@@ -2634,7 +2634,7 @@ std::pair<BugReport*, std::unique_ptr<VisitorsDiagnosticsTy>> findValidReport(
         generateVisitorsDiagnostics(R, ErrorNode, BRC);
 
     if (R->isValid()) {
-      if (Opts.shouldCrosscheckWithZ3()) {
+      if (Opts.shouldCrosscheckWithSMT()) {
         // If crosscheck is enabled, remove all visitors, add the refutation
         // visitor and check again
         R->clearVisitors();

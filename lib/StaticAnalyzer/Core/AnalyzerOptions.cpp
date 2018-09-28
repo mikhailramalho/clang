@@ -296,9 +296,9 @@ bool AnalyzerOptions::shouldSuppressFromCXXStandardLibrary() {
                           /* Default = */ true);
 }
 
-bool AnalyzerOptions::shouldCrosscheckWithZ3() {
-  return getBooleanOption(CrosscheckWithZ3,
-                          "crosscheck-with-z3",
+bool AnalyzerOptions::shouldCrosscheckWithSMT() {
+  return getBooleanOption(CrosscheckWithSMT,
+                          "crosscheck-with-smt",
                           /* Default = */ false);
 }
 

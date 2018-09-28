@@ -270,8 +270,8 @@ private:
   /// \sa shouldSuppressFromCXXStandardLibrary
   Optional<bool> SuppressFromCXXStandardLibrary;
 
-  /// \sa shouldCrosscheckWithZ3
-  Optional<bool> CrosscheckWithZ3;
+  /// \sa shouldCrosscheckWithSMT
+  Optional<bool> CrosscheckWithSMT;
 
   /// \sa reportIssuesInMainSourceFile
   Optional<bool> ReportIssuesInMainSourceFile;
@@ -577,12 +577,12 @@ public:
   /// which accepts the values "true" and "false".
   bool shouldSuppressFromCXXStandardLibrary();
 
-  /// Returns whether bug reports should be crosschecked with the Z3
+  /// Returns whether bug reports should be crosschecked with the SMT
   /// constraint manager backend.
   ///
-  /// This is controlled by the 'crosscheck-with-z3' config option,
+  /// This is controlled by the 'crosscheck-with-smt' config option,
   /// which accepts the values "true" and "false".
-  bool shouldCrosscheckWithZ3();
+  bool shouldCrosscheckWithSMT();
 
   /// Returns whether or not the diagnostic report should be always reported
   /// in the main source file and not the headers.
